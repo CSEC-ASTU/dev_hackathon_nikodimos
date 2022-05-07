@@ -8,3 +8,39 @@
     width: 75%;
     background-color: white;
 }
+
+a{
+    text-decoration: none;
+}
+
+.tabi{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+}
+
+.profily {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 950px;
+    
+}
+
+.cardy{
+    width:300px;
+    
+}
+
+.filtery{
+    position: absolute;
+    top:265px;
+    right: 50px;
+    width:200px;
+}
+
+.hally{
+    width: 615px;
+}
