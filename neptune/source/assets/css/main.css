@@ -5109,6 +5109,7 @@ body.modal-open {
     border-radius: 8px;
     padding: 10px 36px 10px 18px;
     border-color: #e3e6ea;
+    width:200px;
     color: #24292e;
     -webkit-transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
@@ -6867,4 +6868,8 @@ span.flatpickr-weekday {
     .mailbox-open-content-email-attachments .attachments-files-list-item {
         margin-bottom: 10px;
     }
+}.card-body img #sizee{
+    width:30%;
+    height:30%;
+
 }

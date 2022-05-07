@@ -1,10 +1,22 @@
+require ('dotenv').config();
 const express=require ('express');
 const mongoose=require ('mongoose');
 const app=express();
+
 const ejs=require('ejs');
 
 app.set('view engine', 'ejs');
 
+
+const passwordReset = require("./routes/passwordReset");
+const users = require("./routes/users");
+
+
+
+app.use(express.json());
+
+app.use("/api/users", users);
+app.use("/api/password-reset", passwordReset);
 mongoose.connect('mongodb+srv://nikodimos:nikodimos@cmsdb.ujpl5.mongodb.net/users?retryWrites=true&w=majority',()=>console.log("database connected"));
  
 app.use(express.static('assets'));
