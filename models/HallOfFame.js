@@ -49,6 +49,8 @@ const hallOfFameSchema =new mongoose.Schema({
 	}
 	// created_at:{},
 	// updated_at:,   Mongo DB timestamp values by default it inserts it.
+},{
+  timestamps: true
 })
 
 module.exports =mongoose.model("HallOfFame",hallOfFameSchema);

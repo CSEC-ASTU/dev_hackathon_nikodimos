@@ -1,0 +1,10 @@
+/* Your Custom CSS Goes here */
+.scoreboard{
+    width: 50%;
+    background-color: white;
+}
+
+.event {
+    width: 75%;
+    background-color: white;
+}
