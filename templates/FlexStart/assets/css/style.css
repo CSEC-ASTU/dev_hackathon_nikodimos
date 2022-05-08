@@ -2034,3 +2034,11 @@ section {
   font-size: 13px;
   color: #012970;
 }
+
+.executivy{
+  display: flex;
+  width:1114px;
+  justify-content: space-between;
+  align-items: center;
+
+}
