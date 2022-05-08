@@ -4,6 +4,7 @@ const mongoose=require("mongoose");
 const dotenv=require("dotenv");
 const bodyParser=require("body-parser");
 const verify=require("./routes/verifyToken");
+const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 
 
 
@@ -11,8 +12,8 @@ const verify=require("./routes/verifyToken");
 const authRoute=require("./routes/auth");
 const EventRoute=require("./routes/EventRoute");
 const UserRoute=require("./routes/UserRoute");
-const HallofFameRoute=require("./routes/HallofFameRoute");
-
+const authRoutes = require('./routes/authRoutes');
+const AdminRoutes=require("./routes/AdminRoutes");
 
 dotenv.config();
 // view engine
@@ -28,14 +29,15 @@ app.use(express.json());
 
 
 //Middlewares
-app.use('/user',authRoute);
-app.use('/event',EventRoute);
-app.use('/',UserRoute);
-app.use('/fames',HallofFameRoute);
+app.use('/admin',AdminRoutes);
+app.use(authRoutes);
+// app.use('/user',authRoute);
+app.use('/event',verify,EventRoute);
 
+app.use('/user',UserRoute);
 
 app.get('/',(req, res)=>{
-	res.render('pages/scoreboard');
+	res.render('pages/sign-up');
 })
 app.get('/user/home',(req, res)=>{
 	res.render('pages/event');

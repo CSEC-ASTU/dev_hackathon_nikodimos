@@ -20,7 +20,7 @@ const HallofFamePost=async(req, res) => {
 	});
 	try{
 		const savedhalloffame=await halloffame.save();
-		res.redirect('/fames/post');
+		res.redirect('/admin/AdminHallofFame');
 	}catch(err){
 			res.status(400).send(err.message);
 }};

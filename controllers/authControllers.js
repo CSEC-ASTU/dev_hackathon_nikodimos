@@ -71,7 +71,8 @@ const postLogin=async (req, res)=>{
 	const validPass=await bcrypt.compare(req.body.password,user.password);
 	if(!validPass) return res.status(400).send("Invalid Password");
 	const token=jwt.sign({_id:user.id },process.env.TOKEN_SECRET);
-	res.header("auth-token", token).send(token);
+	res.cookie('jwt', token, { httpOnly: true, maxAge: 11* 1000 });
+	res.header("auth-token", token).redirect('/event/newsFeed');
 };
 
 const postLogout=(req, res) => {

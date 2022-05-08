@@ -49,7 +49,7 @@
             <p class="auth-description">Please enter your credentials to create an account.<br>
 
             <div class="auth-credentials m-b-xxl">
-                <form class="row g-3" action="/user/home" method="POST">
+                <form class="row g-3" action="/signup" method="POST">
                     <div class="col-md-6">
                         <label for="firstname" class="form-label">FirstName</label>
                         <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter FirstName" required>
@@ -65,7 +65,9 @@
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+                        <div class="email error"></div>
                     </div>
+
                     <div class="col-md-6">
                         <label for="phone" class="form-label">Phone</label>
                         <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone Number" required>
@@ -73,10 +75,12 @@
                     <div class="col-md-6">
                         <label for="password" class="form-label">Enter Password</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                        <div class="password error"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="confirmpassword" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required>
+                        <div class="password error"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="divisionName" class="form-label">Confirm Password</label>
@@ -95,7 +99,45 @@
         
         </div>
     </div>
-    
+    <script>
+  const form = document.querySelector('form');
+  const emailError = document.querySelector('.email.error');
+  const passwordError = document.querySelector('.password.error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // reset errors
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    // get values
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch('/signup', { 
+        method: 'POST', 
+        body: JSON.stringify({ email, password }),
+        headers: {'Content-Type': 'application/json'}
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
+      }
+      if (data.user) {
+        location.assign('/');
+      }
+
+    }
+    catch (err) {
+      console.log(err);
+    }
+
+  });
+</script>
     <!-- Javascripts -->
     <script src="../../assets/plugins/jquery/jquery-3.5.1.min.js"></script>
     <script src="../../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
