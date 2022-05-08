@@ -2,15 +2,27 @@ const User = require("../models/User");
 const bcrypt= require("bcryptjs");
 const jwt= require("jsonwebtoken");
 
-
-var registerController = async (req, res) => {
+var postRegister = async (req, res) => {
 		    // Finds the validation errors in this request and wraps them in an object with handy functions
 		if (req.body.email.length<=5) {
-		return res.status(400).send("please Peovide the correct email" + req.body.email);
+		return res.status(400).send("please Provide the correct email");
 		}
-
-		//check if email already exists
-		
+		if(!req.body.password===req.body.confirmpassword){
+			return res.redirect('/register')
+		}
+		var cpd =0;
+		var dev =0;
+		if(req.body.divisionName==='1'){
+			cpd=1;
+			dev=0;
+		}else if(req.body.divisionName==='2'){
+			cpd=0;
+			dev=1;
+		}else if(req.body.divisionName==='3'){
+			cpd=1;
+			dev=1;
+		}
+		// ??check if email already exists
 		const EmailExist=await User.findOne({email:req.body.email}); 
 		if(EmailExist) return res.status(400).send("email already exists");
 		//hash password
@@ -24,13 +36,13 @@ var registerController = async (req, res) => {
 			email:req.body.email,
 			phone:req.body.phone,
 			password:hashedPassword,
-			profilephoto:req.body.profilephoto,
+			profilephoto:null,
 			is_admin:0,
 			is_devhead:0,
 			is_cpdhead:0,
 			is_cbdhead:0,
-			is_devmember:0,
-			is_cpdmember:0,
+			is_devmember:dev,
+			is_cpdmember:cpd,
 			is_cbdmember:0,
 			subscription_status:0,
 			is_deleted:0,
@@ -43,11 +55,14 @@ var registerController = async (req, res) => {
 		try{
 			const savedUser=await user.save();
 			res.send(savedUser );
+			console.log(savedUser);
 		}catch(err){
-			res.status(400).send(err.message);
+			res.redirect('/')
+			// res.status(400).send(err.message);
+			console.log("error Occured")
 	}};
 
-const loginController=async (req, res)=>{
+const postLogin=async (req, res)=>{
 	//validation here is
 	//check if email exists
 	const user=await User.findOne({email:req.body.email}); 
@@ -59,12 +74,12 @@ const loginController=async (req, res)=>{
 	res.header("auth-token", token).send(token);
 };
 
-const logoutController=(req, res) => {
+const postLogout=(req, res) => {
 	req.header("auth-token", "");
 	res.send("Logged Out Succesfully");
 };
 
 
-module.exports.registerController=registerController;
-module.exports.loginController=loginController;
-module.exports.logoutController=logoutController;
+module.exports.postRegister=postRegister;
+module.exports.postLogin=postLogin;
+module.exports.postLogout=postLogout;

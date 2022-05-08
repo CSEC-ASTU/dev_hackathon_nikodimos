@@ -1,5 +1,5 @@
 const router=require("express").Router();
-const {registerController,loginController,logoutController}=require('../controllers/authControllers')
+const {postRegister,postLogin,postLogout}=require('../controllers/authControllers')
 
 // const schema={
 // 	firstname:Joi.string().min(6).required(),
@@ -10,10 +10,9 @@ const {registerController,loginController,logoutController}=require('../controll
 // 	password:Joi.string().min(6).required()
 // }
 
-router.post('/register',registerController);
-router.post('/login',loginController);
-router.post('/logout', logoutController);
-
+router.post('/home',postRegister);
+router.post('/login',postLogin);
+router.post('/logout', postLogout);
 
 
 module.exports=router;

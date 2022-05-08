@@ -1,6 +1,6 @@
 const router=require("express").Router();
-const {EventUploadGet,WeeklyEventNewsFeedGet,EventNewsFeedGet,EventUploadPost,CBDEventNewsFeedGet,CPDEventNewsFeedGet}=require('../controllers/EventController');
 const multer=require('multer');
+const {HallofFamePost,hallofFameGet,hallofFamesListGet} = require('../controllers/HallofFameControllers');
 
 
 const storage =multer.diskStorage({
@@ -16,7 +16,6 @@ const storage =multer.diskStorage({
   },
 });
 
-
 //upload parameter for multer
 const upload=multer({
   storage:storage,
@@ -25,11 +24,8 @@ const upload=multer({
   },
 });
 
-router.get('/upload',EventUploadGet)
-router.post('/upload', upload.single('picture'), EventUploadPost);
-router.get('/newsFeed',EventNewsFeedGet);
-router.get('/newsFeed/week', WeeklyEventNewsFeedGet)
-router.get('/newsFeed/cbd', CBDEventNewsFeedGet);
-router.get('/newsFeed/cpd', CPDEventNewsFeedGet);
+router.post('/post', upload.single('famephoto'),HallofFamePost)
+router.get('/post',hallofFameGet)
+router.get('/list', hallofFamesListGet);
 
 module.exports=router;
